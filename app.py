@@ -20,10 +20,10 @@ class Gracz:
     def aktualizuj_rangę(self):
         if self.ranga == "Mistrz":
             return
-        while self.punkty >= 250 and self.ranga != "Mistrz":
+        while self.punkty >= 150 and self.ranga != "Mistrz":
             current_rank_index = RANGI.index(self.ranga)
             if current_rank_index + 1 < len(RANGI):
-                self.punkty -= 250
+                self.punkty -= 150
                 self.ranga = RANGI[current_rank_index + 1]
             else:
                 self.ranga = "Mistrz"
@@ -35,7 +35,7 @@ class Gracz:
             else:
                 current_rank_index = RANGI.index(self.ranga)
                 self.ranga = RANGI[current_rank_index - 1]
-                self.punkty += 250
+                self.punkty += 150
 
 # Funkcje obsługi bazy danych
 def stworz_baze_danych():
