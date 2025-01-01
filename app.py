@@ -3,7 +3,6 @@ import tkinter as tk
 from tkinter import messagebox
 from ttkbootstrap import Style, ttk
 
-# Definicja rang
 RANGI = ["Żelazo", "Brąz", "Srebro", "Złoto", "Platyna", "Diament", "Mistrz"]
 
 class Gracz:
@@ -15,7 +14,7 @@ class Gracz:
         self.seria_porazek = seria_porazek
         self.wygrane = wygrane
         self.rozegrane = rozegrane
-        self.passa = passa  # Aktualna passa zwycięstw lub porażek
+        self.passa = passa
 
     def aktualizuj_rangę(self):
         if self.ranga == "Mistrz":
@@ -37,7 +36,6 @@ class Gracz:
                 self.ranga = RANGI[current_rank_index - 1]
                 self.punkty += 150
 
-# Funkcje obsługi bazy danych
 def stworz_baze_danych():
     conn = sqlite3.connect('dane_gry.db')
     c = conn.cursor()
@@ -96,7 +94,6 @@ def pobierz_wszystkich_graczy():
     conn.close()
     return [Gracz(*g) for g in gracze]
 
-# Funkcje walidacji i interfejsu graficznego
 def waliduj_int(wejscie, nazwa_pola):
     try:
         wartosc = int(wejscie)
@@ -179,19 +176,17 @@ def zatwierdz_wynik():
     if not mecz_domowy_wygranego and gracz_wygrany.seria_zwyciestw < 3:
         przyrost += 3
 
-    # Aktualizacja liczby wygranych i rozegranych gier
     gracz_wygrany.punkty += przyrost
     gracz_wygrany.seria_zwyciestw += 1
     gracz_wygrany.seria_porazek = 0
     gracz_wygrany.rozegrane += 1
-    gracz_wygrany.wygrane += 1  # Dodajemy wygraną
+    gracz_wygrany.wygrane += 1
 
     gracz_przegrany.punkty -= przyrost
     gracz_przegrany.seria_porazek += 1
     gracz_przegrany.seria_zwyciestw = 0
-    gracz_przegrany.rozegrane += 1  # Zwiększamy liczbę rozegranych gier
+    gracz_przegrany.rozegrane += 1
 
-    # Aktualizowanie rang
     gracz_wygrany.aktualizuj_rangę()
     gracz_przegrany.aktualizuj_rangę()
 
@@ -203,7 +198,7 @@ def zatwierdz_wynik():
 
 def wyswietl_statystyki():
     gracze = pobierz_wszystkich_graczy()
-    gracze.sort(key=lambda x: (-RANGI.index(x.ranga), -x.punkty))  # Najpierw sortowanie po randze, potem po punktach
+    gracze.sort(key=lambda x: (-RANGI.index(x.ranga), -x.punkty))
 
     for item in tree_statystyki.get_children():
         tree_statystyki.delete(item)
@@ -213,7 +208,6 @@ def wyswietl_statystyki():
         passa = f"{gracz.seria_zwyciestw}W" if gracz.seria_zwyciestw > 0 else f"{gracz.seria_porazek}L" if gracz.seria_porazek > 0 else ''
         tree_statystyki.insert('', 'end', values=(gracz.imie, gracz.ranga, gracz.punkty, gracz.rozegrane, f"{procent_wygranych:.2f}%", passa))
 
-# Uruchomienie aplikacji
 if __name__ == "__main__":
     stworz_baze_danych()
 
@@ -221,12 +215,10 @@ if __name__ == "__main__":
     root = style.master
     root.title("Beerpong Ranking")
 
-    # Zmiana kolorów na fioletowe
     style.configure('TButton', background='#6A0DAD', foreground='white')
     style.configure('TCombobox', fieldbackground='#3C3F41', background='#6A0DAD')
     style.configure('Treeview.Heading', background='#6A0DAD', foreground='white')
     
-    # Sekcja dodawania nowego gracza
     frame_nowy_gracz = ttk.LabelFrame(root, text="Dodaj nowego gracza")
     frame_nowy_gracz.pack(fill="x", padx=10, pady=5)
 
@@ -235,7 +227,6 @@ if __name__ == "__main__":
     entry_nowy_gracz.pack(side="left", padx=5, pady=5)
     ttk.Button(frame_nowy_gracz, text="Dodaj", command=dodaj_nowego_gracza).pack(side="left", padx=5, pady=5)
 
-    # Sekcja usuwania gracza
     frame_usun_gracza = ttk.LabelFrame(root, text="Usuń gracza")
     frame_usun_gracza.pack(fill="x", padx=10, pady=5)
 
@@ -244,7 +235,6 @@ if __name__ == "__main__":
     combo_usun_gracza.pack(side="left", padx=5, pady=5)
     ttk.Button(frame_usun_gracza, text="Usuń", command=usun_gracza).pack(side="left", padx=5, pady=5)
 
-    # Sekcja wprowadzania wyniku
     frame_wynik = ttk.LabelFrame(root, text="Wprowadź wynik meczu")
     frame_wynik.pack(fill="x", padx=10, pady=5)
 
@@ -265,7 +255,6 @@ if __name__ == "__main__":
 
     ttk.Button(frame_wynik, text="Zatwierdź wynik", command=zatwierdz_wynik).grid(row=3, column=0, columnspan=3, padx=5, pady=10)
 
-    # Sekcja wyświetlania statystyk w formie tabeli
     frame_statystyki = ttk.LabelFrame(root, text="Statystyki graczy")
     frame_statystyki.pack(fill="both", expand=True, padx=10, pady=5)
 
@@ -275,7 +264,6 @@ if __name__ == "__main__":
         tree_statystyki.heading(col, text=col)
         tree_statystyki.column(col, anchor='center')
 
-    # Dodanie fioletowej siatki
     style.configure('Treeview', background='#3C3F41', fieldbackground='#3C3F41', foreground='white')
     style.configure('Treeview', bordercolor='#6A0DAD')
     tree_statystyki.pack(fill="both", expand=True, padx=5, pady=5)
