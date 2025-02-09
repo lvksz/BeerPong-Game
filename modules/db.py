@@ -20,6 +20,16 @@ def stworz_baze_danych():
             passa INTEGER
         )
     ''')
+
+    c.execute('''
+        CREATE TABLE IF NOT EXISTS match_history (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            winner TEXT,
+            loser TEXT,
+            details TEXT,
+            match_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )
+    ''')
     conn.commit()
     conn.close()
 
@@ -62,3 +72,39 @@ def pobierz_wszystkich_graczy():
     gracze = c.fetchall()
     conn.close()
     return [Gracz(*g) for g in gracze]
+
+def add_match_history(winner, loser, details):
+    conn = sqlite3.connect(DB_PATH)
+    c = conn.cursor()
+    c.execute('''
+        INSERT INTO match_history (winner, loser, details)
+        VALUES (?, ?, ?)
+    ''', (winner, loser, details))
+    conn.commit()
+    # Enforce a maximum of 5 match history records.
+    c.execute('SELECT COUNT(*) FROM match_history')
+    count = c.fetchone()[0]
+    if count > 5:
+        c.execute('''
+            DELETE FROM match_history
+            WHERE id IN (
+                SELECT id FROM match_history
+                ORDER BY match_date ASC
+                LIMIT ?
+            )
+        ''', (count - 5,))
+        conn.commit()
+    conn.close()
+
+def get_match_history():
+    conn = sqlite3.connect(DB_PATH)
+    c = conn.cursor()
+    c.execute('''
+        SELECT winner, loser, details, strftime('%Y-%m-%d %H:%M', match_date)
+        FROM match_history
+        ORDER BY match_date DESC
+        LIMIT 5
+    ''')
+    history = c.fetchall()
+    conn.close()
+    return history
