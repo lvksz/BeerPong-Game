@@ -2,21 +2,23 @@
 
 ## Game Rules and Points System
 
-### Ranking System
-- Players start at the rank **"Żelazo"** and can advance through the following ranks:  
-  **Żelazo, Brąz, Srebro, Złoto, Platyna, Diament, Mistrz**.
-- Once a player reaches **"Mistrz"**, they no longer advance.
+In BeerPong-Game, players compete in beer pong matches and earn points based on their performance and the challenge of each match. Here’s a plain language description of how it works:
 
-### Points Calculation
-- When a match result is confirmed:
-  - A base of **20** points is awarded.
-  - An additional **2** points are added for each rank difference between the losing player and the winning player (computed as:  
-    2 × (index(lossing rank) - index(winning rank))).
-  - The number of remaining cups for the winner is also added.
-  - The final bonus (added to the winning player's score and subtracted from the losing player's) is calculated as:  
-    **max(20 + (rank difference × 2) + remaining cups, 1)**.
-  - If the winning match was played away from home and the winning player's win-streak is less than 3, an extra **+3** points bonus is applied.
+**Ranking:**
+- Every player starts at the base rank called "Żelazo."
+- As you win matches, you accumulate points and move up through the ranks: Żelazo, Brąz, Srebro, Złoto, Platyna, Diament, and finally Mistrz.
+- Once you reach "Mistrz," you’ve hit the top and won’t advance further.
 
-### Rank Updates
-- A player advances to the next rank when accumulating **150** points, after which **150** points are deducted.
-- If a player's points drop below 0, points are adjusted and the player may be demoted to a lower rank.
+**Earning and Losing Points:**
+- Each match gives the winner a base score of 20 points.
+- Extra points are awarded based on:
+  - The difference between the winner’s rank and the opponent’s rank. Beating a higher-ranked opponent earns you more points.
+  - The number of remaining cups you have at the end of the match.
+  - In some cases, an additional bonus is applied if you’re playing away from home and your winning streak is short.
+- The winning player gets these extra points added to their total, while the losing player has the same amount deducted.
+
+**Rank Progression:**
+- When you build up 150 points, you get promoted to the next rank, and your points are reduced by 150 as you move up.
+- If you lose points and drop below zero, you might be demoted to a lower rank. However, no one can go lower than the starting rank "Żelazo."
+
+This points and ranking system ensures that each match has a meaningful impact on your overall standing, rewarding excellent performance and making comebacks exciting.
