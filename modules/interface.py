@@ -123,6 +123,33 @@ def run_interface():
     style.configure('TCombobox', fieldbackground='#3C3F41', background='#6A0DAD')
     style.configure('Treeview.Heading', background='#6A0DAD', foreground='white')
     
+    # Updated: function to show game rules with markdown conversion and styled header
+    def show_info():
+        import os, re
+        info_window = tk.Toplevel(root)
+        info_window.title("Game Rules")
+        info_window.geometry("900x600")
+        info_window.config(bg='#3C3F41')  # Set same gray background
+        try:
+            base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+            readme_path = os.path.join(base_dir, "README.md")
+            with open(readme_path, "r", encoding="utf-8") as f:
+                content = f.read()
+        except Exception as e:
+            content = "Could not load rules."
+        # Minimal markdown conversion: remove headers and bold/italic markers
+        content = re.sub(r'\*\*(.*?)\*\*', r'\1', content)
+        content = re.sub(r'\*(.*?)\*', r'\1', content)
+        content = re.sub(r'#+\s*', '', content)
+        # Add violet header like in the main interface
+        header_label = tk.Label(info_window, text="Game Rules", bg='#6A0DAD', font=("TkDefaultFont", 14, "bold"))
+        header_label.pack(fill="x", padx=5, pady=(5,2))
+        # Use larger font for content and apply same gray background
+        text = tk.Text(info_window, wrap="word", bg='#3C3F41', fg='white', font=("TkDefaultFont", 12))
+        text.insert("1.0", content)
+        text.config(state="disabled")
+        text.pack(fill="both", expand=True, padx=5, pady=(2,5))
+    
     # Main container with two rows: row0 for top sections, row1 for statistics
     main_frame = ttk.Frame(root)
     main_frame.pack(fill="both", expand=True)
@@ -140,6 +167,9 @@ def run_interface():
     left_top_frame = ttk.Frame(top_frame, height=300)
     left_top_frame.grid(row=0, column=0, sticky="nsew", padx=5, pady=5)
     left_top_frame.grid_propagate(False)
+    
+    # New: Info Button Section
+    ttk.Button(left_top_frame, text="Info", command=show_info).pack(fill="x", padx=5, pady=2)
 
     # Add New Player Section
     frame_nowy_gracz = ttk.LabelFrame(left_top_frame, text="Dodaj nowego gracza")
