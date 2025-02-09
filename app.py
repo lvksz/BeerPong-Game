@@ -261,7 +261,7 @@ if __name__ == "__main__":
     columns = ('Imię', 'Ranga', 'Punkty', 'Rozegrane', 'Win%', 'Passa')
     tree_statystyki = ttk.Treeview(frame_statystyki, columns=columns, show='headings', selectmode="browse")
     for col in columns:
-        tree_statystyki.heading(col, text=col)
+        tree_statystyki.heading(col, text=col) 
         tree_statystyki.column(col, anchor='center')
 
     style.configure('Treeview', background='#3C3F41', fieldbackground='#3C3F41', foreground='white')
