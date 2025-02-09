@@ -1,8 +1,12 @@
+import os
 import sqlite3
 from modules.game_logic import Gracz
 
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+DB_PATH = os.path.join(BASE_DIR, 'dane_gry.db')
+
 def stworz_baze_danych():
-    conn = sqlite3.connect('./dane_gry.db')
+    conn = sqlite3.connect(DB_PATH)
     c = conn.cursor()
     c.execute('''
         CREATE TABLE IF NOT EXISTS gracze (
@@ -20,7 +24,7 @@ def stworz_baze_danych():
     conn.close()
 
 def dodaj_gracza(gracz):
-    conn = sqlite3.connect('./dane_gry.db')
+    conn = sqlite3.connect(DB_PATH)
     c = conn.cursor()
     c.execute('''
         INSERT OR IGNORE INTO gracze (imie, ranga, punkty, seria_zwyciestw, seria_porazek, wygrane, rozegrane, passa)
@@ -30,7 +34,7 @@ def dodaj_gracza(gracz):
     conn.close()
 
 def pobierz_gracza(imie):
-    conn = sqlite3.connect('./dane_gry.db')
+    conn = sqlite3.connect(DB_PATH)
     c = conn.cursor()
     c.execute('SELECT * FROM gracze WHERE imie = ?', (imie,))
     wynik = c.fetchone()
@@ -41,7 +45,7 @@ def pobierz_gracza(imie):
         return None
 
 def zaktualizuj_gracza(gracz):
-    conn = sqlite3.connect('./dane_gry.db')
+    conn = sqlite3.connect(DB_PATH)
     c = conn.cursor()
     c.execute('''
         UPDATE gracze
@@ -52,7 +56,7 @@ def zaktualizuj_gracza(gracz):
     conn.close()
 
 def pobierz_wszystkich_graczy():
-    conn = sqlite3.connect('./dane_gry.db')
+    conn = sqlite3.connect(DB_PATH)
     c = conn.cursor()
     c.execute('SELECT * FROM gracze')
     gracze = c.fetchall()
