@@ -11,14 +11,14 @@ In BeerPong-Game, players compete in beer pong matches and earn points based on 
 
 **Earning and Losing Points:**
 - Each match gives the winner a base score of 20 points.
-- Extra points are awarded based on:
-  - The difference between the winner’s rank and the opponent’s rank. Beating a higher-ranked opponent earns you more points.
-  - The number of remaining cups you have at the end of the match.
-  - In some cases, an additional bonus is applied if you’re playing away from home and your winning streak is short.
-- The winning player gets these extra points added to their total, while the losing player has the same amount deducted.
+- When you win a match, you earn extra points based on several factors:
+  - **Opponent’s Rank:** If you beat an opponent with a higher rank than yours, you get an extra 2 points for each rank level they have above you. For example, defeating someone two ranks higher earns you an additional 4 points.
+  - **Remaining Cups:** You also earn extra points equal to the number of cups the winner has left at the end of the match.
+  - **Additional Bonus:** Under certain conditions, such as playing away from home and having a short win streak, you receive a bonus of 3 extra points.
+- The points you earn are added to your total, while the same amount of points is deducted from your opponent.
 
 **Rank Progression:**
-- When you build up 150 points, you get promoted to the next rank, and your points are reduced by 150 as you move up.
-- If you lose points and drop below zero, you might be demoted to a lower rank. However, no one can go lower than the starting rank "Żelazo."
+- When you accumulate a total of 150 points, you’re promoted to the next rank and 150 points are subtracted from your score.
+- Conversely, if your points drop below zero, you may be demoted to a lower rank (though no player can fall below the starting rank of "Żelazo").
 
-This points and ranking system ensures that each match has a meaningful impact on your overall standing, rewarding excellent performance and making comebacks exciting.
+This system rewards taking on tougher opponents and performing well, ensuring that every match has a meaningful impact on your ranking.
