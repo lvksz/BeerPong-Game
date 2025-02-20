@@ -4,6 +4,7 @@ from tkinter import messagebox
 from ttkbootstrap import Style, ttk
 from modules.db import stworz_baze_danych, dodaj_gracza, pobierz_gracza, zaktualizuj_gracza, pobierz_wszystkich_graczy, get_match_history, add_match_history
 from modules.game_logic import RANGI, Gracz, waliduj_int
+from modules.db import DB_PATH
 
 def odswiez_liste_graczy():
     imiona = [gracz.imie for gracz in pobierz_wszystkich_graczy()]
@@ -39,7 +40,7 @@ def usun_gracza():
         messagebox.showerror("Błąd", "Wybierz gracza do usunięcia.")
         return
     if messagebox.askyesno("Potwierdzenie", f"Czy na pewno chcesz usunąć gracza '{imie}'?"):
-        conn = sqlite3.connect('dane_gry.db')
+        conn = sqlite3.connect(DB_PATH)
         c = conn.cursor()
         c.execute('DELETE FROM gracze WHERE imie = ?', (imie,))
         conn.commit()
